@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Pricing = () => {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -145,16 +146,18 @@ const Pricing = () => {
                   )}
                 </div>
                 
-                <button
-                  onClick={() => handlePlanClick(plan.id)}
-                  className={`w-full py-2.5 px-4 rounded-lg font-medium transition-colors ${
-                    plan.popular 
-                      ? 'bg-blue-500 hover:bg-blue-600 text-white' 
-                      : 'bg-white border border-gray-300 hover:bg-gray-50 text-gray-800'
-                  }`}
-                >
-                  Start 14-day free trial
-                </button>
+                <Link to={`/register?plan=${plan.id}`}>
+                  <button
+                    onClick={() => handlePlanClick(plan.id)}
+                    className={`w-full py-2.5 px-4 rounded-lg font-medium transition-colors ${
+                      plan.popular 
+                        ? 'bg-blue-500 hover:bg-blue-600 text-white' 
+                        : 'bg-white border border-gray-300 hover:bg-gray-50 text-gray-800'
+                    }`}
+                  >
+                    Start 14-day free trial
+                  </button>
+                </Link>
                 
                 <div className="mt-8 space-y-4">
                   <p className="text-sm font-medium text-gray-700">Plan includes:</p>
@@ -201,9 +204,11 @@ const Pricing = () => {
               </div>
               
               <div className="pt-2">
-                <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium">
-                  Create account
-                </Button>
+                <Link to="/dashboard">
+                  <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium">
+                    Create account
+                  </Button>
+                </Link>
               </div>
             </form>
             

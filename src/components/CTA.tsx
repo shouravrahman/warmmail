@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { Link } from "react-router-dom";
 
 const CTA = () => {
   const [isVisible, ref] = useIntersectionObserver();
@@ -40,19 +41,23 @@ const CTA = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <Button
-              size="lg"
-              className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-6 h-auto text-lg w-full sm:w-auto"
-            >
-              Start Free Trial
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="bg-transparent border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-6 h-auto text-lg w-full sm:w-auto"
-            >
-              Schedule a Demo
-            </Button>
+            <Link to="/register">
+              <Button
+                size="lg"
+                className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-6 h-auto text-lg w-full sm:w-auto"
+              >
+                Start Free Trial
+              </Button>
+            </Link>
+            <Link to="/login">
+              <Button
+                variant="outline"
+                size="lg"
+                className="bg-transparent border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-6 h-auto text-lg w-full sm:w-auto"
+              >
+                Schedule a Demo
+              </Button>
+            </Link>
           </div>
 
           <div className="mt-12 flex flex-col md:flex-row items-center justify-center text-blue-100 space-y-4 md:space-y-0 md:space-x-12">

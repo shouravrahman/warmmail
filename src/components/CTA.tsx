@@ -1,152 +1,143 @@
 
-import React, { useState } from 'react';
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const CTA = () => {
-  const { toast } = useToast();
-  const [email, setEmail] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!email) {
-      toast({
-        title: "Please enter your email",
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    setIsLoading(true);
-    
-    // Simulating API call
-    setTimeout(() => {
-      setIsLoading(false);
-      setEmail('');
-      
-      toast({
-        title: "Success!",
-        description: "Your free trial has been created. Check your email for next steps.",
-        variant: "default",
-      });
-      
-      // Create confetti effect
-      createConfetti();
-    }, 1500);
-  };
-  
-  const createConfetti = () => {
-    const confettiCount = 100;
-    const container = document.querySelector('.confetti-container') as HTMLElement;
-    
-    if (!container) return;
-    
-    for (let i = 0; i < confettiCount; i++) {
-      const confetti = document.createElement('div');
-      confetti.className = 'confetti';
-      
-      // Random properties
-      const size = Math.random() * 10 + 5;
-      const color = `hsl(${Math.random() * 360}, 80%, 60%)`;
-      const left = Math.random() * 100;
-      const animationDuration = Math.random() * 3 + 2;
-      
-      // Apply styles
-      confetti.style.width = `${size}px`;
-      confetti.style.height = `${size}px`;
-      confetti.style.backgroundColor = color;
-      confetti.style.left = `${left}%`;
-      confetti.style.animationDuration = `${animationDuration}s`;
-      confetti.style.animationDelay = `${Math.random() * 0.5}s`;
-      
-      container.appendChild(confetti);
-      
-      // Remove confetti after animation
-      setTimeout(() => {
-        confetti.remove();
-      }, animationDuration * 1000);
-    }
-  };
+  const [isVisible, ref] = useIntersectionObserver();
 
   return (
-    <section className="relative py-24 bg-gradient-to-r from-blue-600 to-violet-600 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-20 -right-20 w-64 h-64 bg-white opacity-10 rounded-full"></div>
-        <div className="absolute top-40 -left-20 w-80 h-80 bg-white opacity-10 rounded-full"></div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-white opacity-10 rounded-full animate-pulse"></div>
+    <section
+      id="cta"
+      ref={ref}
+      className={`py-20 bg-gradient-to-br from-blue-500 to-violet-600 relative overflow-hidden ${
+        isVisible ? "animate-reveal revealed" : "animate-reveal"
+      }`}
+    >
+      <div className="absolute top-0 right-0 w-full h-full overflow-hidden z-0">
+        <svg
+          className="absolute right-0 top-0 h-full opacity-10"
+          width="400"
+          height="600"
+          viewBox="0 0 400 600"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="250" cy="150" r="100" fill="white" />
+          <circle cx="50" cy="300" r="200" fill="white" />
+          <circle cx="350" cy="450" r="150" fill="white" />
+        </svg>
       </div>
-      
-      <div className="container relative mx-auto px-4 z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to stop landing in spam?
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+            Start warming up your inbox today
           </h2>
-          <p className="text-lg text-white opacity-90 mb-8 mx-auto max-w-2xl">
-            Join 5,000+ businesses that use InboxWarm to improve deliverability and reach more inboxes. Start your free 14-day trial today.
+          <p className="text-lg md:text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+            Join thousands of email marketers and sales professionals who have
+            improved their deliverability with InboxWarm.
           </p>
-          
-          <div className="max-w-md mx-auto">
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-grow px-4 py-3 rounded-lg border border-transparent focus:border-white focus:ring-2 focus:ring-white/30 bg-white/10 backdrop-blur-sm text-white placeholder-white/70"
-              />
-              <Button 
-                type="submit" 
-                className="bg-white text-blue-600 hover:bg-blue-50 transition-colors font-medium px-6"
-                disabled={isLoading}
+
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <Button
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-6 h-auto text-lg w-full sm:w-auto"
+            >
+              Start Free Trial
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="bg-transparent border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-6 h-auto text-lg w-full sm:w-auto"
+            >
+              Schedule a Demo
+            </Button>
+          </div>
+
+          <div className="mt-12 flex flex-col md:flex-row items-center justify-center text-blue-100 space-y-4 md:space-y-0 md:space-x-12">
+            <div className="flex items-center">
+              <svg
+                className="w-6 h-6 mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                {isLoading ? 'Creating account...' : 'Start Free Trial'}
-              </Button>
-            </form>
-            
-            <p className="text-sm text-white/80 mt-4">
-              No credit card required. Cancel anytime.
-            </p>
-            
-            <div className="flex items-center justify-center mt-8">
-              <div className="flex -space-x-2">
-                <img className="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=facearea&facepad=2&w=40&h=40&q=80" alt="User" />
-                <img className="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=facearea&facepad=2&w=40&h=40&q=80" alt="User" />
-                <img className="w-10 h-10 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=facearea&facepad=2&w=40&h=40&q=80" alt="User" />
-              </div>
-              <p className="text-sm text-white ml-4">
-                Joined by <span className="font-semibold">243</span> new users this week
-              </p>
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span>No credit card required</span>
             </div>
+
+            <div className="flex items-center">
+              <svg
+                className="w-6 h-6 mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span>14-day free trial</span>
+            </div>
+
+            <div className="flex items-center">
+              <svg
+                className="w-6 h-6 mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span>Cancel anytime</span>
+            </div>
+          </div>
+
+          <div className="mt-16 text-center">
+            <div className="flex justify-center space-x-4">
+              <img
+                src="https://via.placeholder.com/100x30?text=Client+1"
+                alt="Client logo"
+                className="h-8 opacity-70"
+              />
+              <img
+                src="https://via.placeholder.com/100x30?text=Client+2"
+                alt="Client logo"
+                className="h-8 opacity-70"
+              />
+              <img
+                src="https://via.placeholder.com/100x30?text=Client+3"
+                alt="Client logo"
+                className="h-8 opacity-70"
+              />
+            </div>
+            <p className="text-sm text-blue-200 mt-4">
+              Trusted by leading companies worldwide
+            </p>
           </div>
         </div>
       </div>
       
-      {/* Container for confetti animation */}
-      <div className="confetti-container absolute inset-0 overflow-hidden pointer-events-none"></div>
-      
-      <style jsx>{`
-        .confetti {
-          position: absolute;
-          top: -20px;
-          width: 10px;
-          height: 10px;
-          background: white;
-          border-radius: 0;
-          animation: fall linear forwards;
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 1; }
         }
         
-        @keyframes fall {
-          0% {
-            transform: translateY(0) rotate(0deg);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(100vh) rotate(720deg);
-            opacity: 0;
-          }
+        .pulse-element {
+          animation: pulse 2s infinite ease-in-out;
         }
       `}</style>
     </section>

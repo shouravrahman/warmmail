@@ -7,6 +7,8 @@ import WarmupLogTable from "@/components/dashboard/WarmupLogTable";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import InboxSetupWizard from "@/components/onboarding/InboxSetupWizard";
 
 // Mock data
 const mockUser = {
@@ -23,7 +25,7 @@ const mockInboxes = [
     dailySent: 24,
     dailyReplied: 18,
     dailySpam: 1,
-    status: "warming",
+    status: "warming" as const,
   },
   {
     id: "2",
@@ -32,7 +34,7 @@ const mockInboxes = [
     dailySent: 15,
     dailyReplied: 9,
     dailySpam: 3,
-    status: "warming",
+    status: "warming" as const,
   },
   {
     id: "3",
@@ -41,21 +43,23 @@ const mockInboxes = [
     dailySent: 30,
     dailyReplied: 29,
     dailySpam: 0,
-    status: "completed",
+    status: "completed" as const,
   }
 ];
 
 const mockWarmupLogs = [
-  { id: "l1", date: "2025-04-30", subject: "Follow-up on our conversation", status: "inbox" },
-  { id: "l2", date: "2025-04-29", subject: "Re: Project timeline update", status: "replied" },
-  { id: "l3", date: "2025-04-28", subject: "Introduction to our services", status: "inbox" },
-  { id: "l4", date: "2025-04-27", subject: "Discount opportunity", status: "spam" },
-  { id: "l5", date: "2025-04-26", subject: "Weekly newsletter", status: "inbox" },
+  { id: "l1", date: "2025-04-30", subject: "Follow-up on our conversation", status: "inbox" as const },
+  { id: "l2", date: "2025-04-29", subject: "Re: Project timeline update", status: "replied" as const },
+  { id: "l3", date: "2025-04-28", subject: "Introduction to our services", status: "inbox" as const },
+  { id: "l4", date: "2025-04-27", subject: "Discount opportunity", status: "spam" as const },
+  { id: "l5", date: "2025-04-26", subject: "Weekly newsletter", status: "inbox" as const },
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [selectedInbox, setSelectedInbox] = useState<string | null>("1");
   const [notificationCount] = useState(3);
+  const [showSetupWizard, setShowSetupWizard] = useState(true);
   
   const handleSelectInbox = (id: string) => {
     setSelectedInbox(id);
@@ -67,6 +71,7 @@ const Dashboard = () => {
 
   const handleViewBilling = () => {
     console.log("View billing");
+    navigate("/billing");
   };
 
   const handleLogout = () => {
@@ -77,7 +82,23 @@ const Dashboard = () => {
     console.log("View notifications");
   };
 
+  const handleInboxSetupComplete = () => {
+    setShowSetupWizard(false);
+  };
+
+  const handleAddNewInbox = () => {
+    setShowSetupWizard(true);
+  };
+
+  const handleViewInboxDetail = (id: string) => {
+    navigate(`/inbox/${id}`);
+  };
+
   const selectedInboxData = mockInboxes.find(inbox => inbox.id === selectedInbox);
+
+  if (showSetupWizard) {
+    return <InboxSetupWizard onComplete={handleInboxSetupComplete} onCancel={() => setShowSetupWizard(false)} />;
+  }
 
   return (
     <LayoutShell
@@ -96,7 +117,7 @@ const Dashboard = () => {
             <h1 className="text-2xl font-bold">Inbox Dashboard</h1>
             <p className="text-gray-500">Manage and monitor your email warm-up</p>
           </div>
-          <Button className="mt-4 md:mt-0">
+          <Button className="mt-4 md:mt-0" onClick={handleAddNewInbox}>
             <Plus className="mr-2 h-4 w-4" />
             Add New Inbox
           </Button>
@@ -107,15 +128,14 @@ const Dashboard = () => {
           {mockInboxes.map((inbox) => (
             <InboxCard
               key={inbox.id}
-              id={inbox.id}
               email={inbox.email}
               healthScore={inbox.healthScore}
+              sentCount={inbox.dailySent}
+              repliedCount={inbox.dailyReplied}
+              spamCount={inbox.dailySpam}
               status={inbox.status}
-              dailySent={inbox.dailySent}
-              dailyReplied={inbox.dailyReplied}
-              dailySpam={inbox.dailySpam}
-              selected={selectedInbox === inbox.id}
-              onViewDetails={() => setSelectedInbox(inbox.id)}
+              onViewActivity={() => handleViewInboxDetail(inbox.id)}
+              onToggleStatus={() => console.log(`Toggle status for ${inbox.email}`)}
             />
           ))}
         </div>
@@ -136,12 +156,23 @@ const Dashboard = () => {
             </div>
             <div>
               <AIInsightBox 
-                inbox={selectedInboxData.email}
-                healthScore={selectedInboxData.healthScore}
+                inboxEmail={selectedInboxData.email}
                 insights={[
-                  "Your open rate rose by 12% this week.",
-                  "Spam flags dropped below 5%.",
-                  "You're ready to start outreach soon."
+                  { 
+                    title: "Open Rate Improvement", 
+                    description: "Your open rate rose by 12% this week.", 
+                    type: "positive" 
+                  },
+                  { 
+                    title: "Spam Flags Reduced", 
+                    description: "Spam flags dropped below 5%.", 
+                    type: "positive" 
+                  },
+                  { 
+                    title: "Ready for Outreach", 
+                    description: "You're ready to start outreach soon.", 
+                    type: "info" 
+                  }
                 ]}
                 estimatedCompletion="5 days"
               />

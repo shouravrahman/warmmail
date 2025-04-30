@@ -2,13 +2,15 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+interface InsightItem {
+  title: string;
+  description: string;
+  type: "positive" | "warning" | "info";
+}
+
 interface AIInsightBoxProps {
   inboxEmail: string;
-  insights: {
-    title: string;
-    description: string;
-    type: "positive" | "warning" | "info";
-  }[];
+  insights: InsightItem[];
   estimatedCompletion?: string;
 }
 

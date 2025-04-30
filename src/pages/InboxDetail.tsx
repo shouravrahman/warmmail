@@ -9,7 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
+import { Badge } from "@/components/ui/badge";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 
 // Mock data
 const mockUser = {
@@ -58,14 +59,94 @@ const mockChartData = [
   { date: '04/30', sent: 20, replied: 17, spam: 0 },
 ];
 
+// Enhanced mock data with more details
 const mockWarmupLogs = [
-  { id: "l1", date: "2025-04-30", subject: "Follow-up on our conversation", status: "inbox" as const },
-  { id: "l2", date: "2025-04-29", subject: "Re: Project timeline update", status: "replied" as const },
-  { id: "l3", date: "2025-04-28", subject: "Introduction to our services", status: "inbox" as const },
-  { id: "l4", date: "2025-04-27", subject: "Discount opportunity", status: "spam" as const },
-  { id: "l5", date: "2025-04-26", subject: "Weekly newsletter", status: "inbox" as const },
-  { id: "l6", date: "2025-04-25", subject: "Meeting request", status: "replied" as const },
-  { id: "l7", date: "2025-04-24", subject: "Important update", status: "inbox" as const },
+  { 
+    id: "l1", 
+    date: "2025-04-30T14:25:32Z", 
+    subject: "Follow-up on our conversation", 
+    status: "inbox" as const,
+    fromEmail: "system@warmupsender.com",
+    toEmail: "info@company.com",
+    openTime: "2025-04-30T14:32:15Z",
+    contentPreview: "I wanted to follow up on our previous conversation regarding...",
+    aiGenerated: true,
+    deliveryScore: 95
+  },
+  { 
+    id: "l2", 
+    date: "2025-04-29T10:15:44Z", 
+    subject: "Re: Project timeline update", 
+    status: "replied" as const,
+    fromEmail: "partner@network.com",
+    toEmail: "info@company.com",
+    openTime: "2025-04-29T10:18:22Z",
+    replyTime: "2025-04-29T10:25:30Z",
+    contentPreview: "Thanks for sending over the project timeline update. I've reviewed...",
+    aiGenerated: false,
+    deliveryScore: 92
+  },
+  { 
+    id: "l3", 
+    date: "2025-04-28T16:40:12Z", 
+    subject: "Introduction to our services", 
+    status: "inbox" as const,
+    fromEmail: "system@warmupsender.com",
+    toEmail: "info@company.com", 
+    openTime: "2025-04-28T16:52:01Z",
+    contentPreview: "I'd like to introduce our comprehensive service offerings that...",
+    aiGenerated: true,
+    deliveryScore: 88
+  },
+  { 
+    id: "l4", 
+    date: "2025-04-27T09:05:23Z", 
+    subject: "Discount opportunity", 
+    status: "spam" as const,
+    fromEmail: "system@warmupsender.com",
+    toEmail: "info@company.com",
+    spamTime: "2025-04-27T09:06:45Z",
+    contentPreview: "Limited time discount opportunity for your consideration...",
+    aiGenerated: true,
+    deliveryScore: 42
+  },
+  { 
+    id: "l5", 
+    date: "2025-04-26T13:22:56Z", 
+    subject: "Weekly newsletter", 
+    status: "inbox" as const,
+    fromEmail: "newsletter@network.com",
+    toEmail: "info@company.com",
+    openTime: "2025-04-26T14:15:30Z",
+    contentPreview: "This week's top stories and updates from around the industry...",
+    aiGenerated: false,
+    deliveryScore: 90
+  },
+  { 
+    id: "l6", 
+    date: "2025-04-25T11:10:33Z", 
+    subject: "Meeting request", 
+    status: "replied" as const,
+    fromEmail: "contact@network.com",
+    toEmail: "info@company.com",
+    openTime: "2025-04-25T11:15:22Z",
+    replyTime: "2025-04-25T11:45:18Z",
+    contentPreview: "I'd like to schedule a meeting to discuss potential collaboration...",
+    aiGenerated: false,
+    deliveryScore: 94
+  },
+  { 
+    id: "l7", 
+    date: "2025-04-24T08:30:15Z", 
+    subject: "Important update", 
+    status: "inbox" as const,
+    fromEmail: "system@warmupsender.com",
+    toEmail: "info@company.com",
+    openTime: "2025-04-24T09:05:42Z",
+    contentPreview: "I wanted to share an important update regarding our upcoming...",
+    aiGenerated: true,
+    deliveryScore: 85
+  },
 ];
 
 const InboxDetail = () => {
@@ -114,6 +195,15 @@ const InboxDetail = () => {
     return <div>Inbox not found</div>;
   }
 
+  // Format data for better display on charts
+  const formattedChartData = mockChartData.map(item => ({
+    ...item,
+    date: new Date(2025, 3, parseInt(item.date.split('/')[1])).toLocaleDateString('en-US', {
+      month: 'short', 
+      day: 'numeric'
+    })
+  }));
+
   return (
     <LayoutShell
       user={mockUser}
@@ -132,9 +222,9 @@ const InboxDetail = () => {
               <h1 className="text-2xl font-bold">{inbox.email}</h1>
               <div className="ml-3">
                 <div className="flex items-center">
-                  <Label htmlFor="inbox-status" className={isActive ? "text-green-600 mr-2" : "text-gray-400 mr-2"}>
+                  <Badge variant={isActive ? "secondary" : "outline"} className="mr-2">
                     {isActive ? "Active" : "Paused"}
-                  </Label>
+                  </Badge>
                   <Switch
                     id="inbox-status"
                     checked={isActive}
@@ -177,11 +267,16 @@ const InboxDetail = () => {
                 <CardContent>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={mockChartData}>
+                      <BarChart data={formattedChartData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="date" />
                         <YAxis />
-                        <Tooltip />
+                        <RechartsTooltip 
+                          formatter={(value, name) => {
+                            return [`${value} emails`, name];
+                          }}
+                          labelFormatter={(label) => `Date: ${label}`}
+                        />
                         <Bar dataKey="sent" fill="#3B82F6" name="Sent" />
                         <Bar dataKey="replied" fill="#10B981" name="Replied" />
                         <Bar dataKey="spam" fill="#EF4444" name="Spam" />
@@ -199,11 +294,14 @@ const InboxDetail = () => {
                 <CardContent>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={mockChartData}>
+                      <LineChart data={formattedChartData}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="date" />
                         <YAxis tickFormatter={(value) => `${value}%`} />
-                        <Tooltip formatter={(value) => [`${value}%`, 'Spam Rate']} />
+                        <RechartsTooltip 
+                          formatter={(value) => [`${value}%`, 'Spam Rate']} 
+                          labelFormatter={(label) => `Date: ${label}`}
+                        />
                         <Line 
                           type="monotone" 
                           dataKey={(entry) => (entry.spam / entry.sent) * 100} 
@@ -236,7 +334,7 @@ const InboxDetail = () => {
                 <CardDescription>Detailed history of warm-up emails</CardDescription>
               </CardHeader>
               <CardContent>
-                <WarmupLogTable entries={mockWarmupLogs} />
+                <WarmupLogTable entries={mockWarmupLogs} showDetailedView={true} />
               </CardContent>
             </Card>
           </TabsContent>

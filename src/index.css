@@ -116,6 +116,30 @@
   .btn-secondary {
     @apply inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-blue-200 bg-white text-blue-700 hover:bg-blue-50 h-10 px-4 py-2;
   }
+  
+  /* New styles for the indie hacker theme */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+  }
 }
 
 .feature-card {
@@ -162,4 +186,23 @@
   100% {
     offset-distance: 100%;
   }
+}
+
+/* Design elements specific to the indie hacker theme */
+.indie-shadow {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.indie-card {
+  @apply bg-white rounded-xl p-6 shadow-md transition-all duration-300;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.indie-card:hover {
+  @apply shadow-lg transform -translate-y-1;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.handwritten {
+  font-family: 'Caveat', cursive;
 }

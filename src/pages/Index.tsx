@@ -1,22 +1,20 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import TrustLogos from "@/components/TrustLogos";
-import Benefits from "@/components/Benefits";
-import EmailJourney from "@/components/EmailJourney";
-import HowItWorks from "@/components/HowItWorks";
-import InboxHealth from "@/components/InboxHealth";
-import Testimonials from "@/components/Testimonials";
-import Pricing from "@/components/Pricing";
-import FAQ from "@/components/FAQ";
-import CTA from "@/components/CTA";
+import IndieHero from "@/components/IndieHero";
+import IndieJourney from "@/components/IndieJourney";
+import ValueCalculator from "@/components/ValueCalculator";
+import HowWarmupWorks from "@/components/HowWarmupWorks";
+import WhatYouGet from "@/components/WhatYouGet";
+import TestimonialsIndieHackers from "@/components/TestimonialsIndieHackers";
+import IndiePricing from "@/components/IndiePricing";
+import IndieFAQ from "@/components/IndieFAQ";
+import FounderNote from "@/components/FounderNote";
+import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
-import FloatingCTA from "@/components/FloatingCTA";
-import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const Index = () => {
-  useEffect(() => {
+  React.useEffect(() => {
     // Add intersection observer to reveal elements as they come into view
     const animatedElements = document.querySelectorAll('.animate-reveal');
     
@@ -39,19 +37,18 @@ const Index = () => {
     <div className="min-h-screen">
       <Navbar />
       <main>
-        <Hero />
-        <TrustLogos />
-        <Benefits />
-        <EmailJourney />
-        <HowItWorks />
-        <InboxHealth />
-        <Testimonials />
-        <Pricing />
-        <FAQ />
-        <CTA />
+        <IndieHero />
+        <IndieJourney />
+        <ValueCalculator />
+        <HowWarmupWorks />
+        <WhatYouGet />
+        <TestimonialsIndieHackers />
+        <IndiePricing />
+        <IndieFAQ />
+        <FounderNote />
+        <FinalCTA />
       </main>
       <Footer />
-      <FloatingCTA />
     </div>
   );
 };

@@ -51,10 +51,11 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({
   };
 
   return (
-    <div className="bg-white shadow-sm border-b px-4 py-3 flex items-center justify-between">
+     <div className="bg-white shadow-sm border-b px-4 py-3 flex items-center justify-between container">
       <div className="flex items-center space-x-4">
+           <a href="/" className="flex items-center">
         <h1 className="text-xl font-bold text-blue-600">InboxWarm</h1>
-        
+           </a>
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -64,7 +65,7 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({
                   {inboxes.map((inbox) => (
                     <li key={inbox.id}>
                       <NavigationMenuLink asChild>
-                        <Button 
+                           <Button
                           variant="ghost"
                           className="w-full justify-start"
                           onClick={() => onSelectInbox(inbox.id)}
@@ -81,7 +82,7 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({
                   ))}
                   <li className="mt-2 pt-2 border-t">
                     <NavigationMenuLink asChild>
-                      <Button 
+                                <Button
                         variant="outline"
                         className="w-full"
                       >
@@ -95,11 +96,11 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      
+
       <div className="flex items-center space-x-4">
-        <Button 
-          variant="ghost" 
-          size="sm" 
+           <Button
+              variant="ghost"
+              size="sm"
           className="relative"
           onClick={onViewNotifications}
         >
@@ -110,15 +111,15 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({
             </span>
           )}
         </Button>
-        
-        <Button 
-          variant="ghost" 
+
+           <Button
+              variant="ghost"
           size="sm"
           onClick={onViewBilling}
         >
           Billing
         </Button>
-        
+
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -137,9 +138,9 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({
                     <div className="text-gray-500 text-xs">{user.email}</div>
                   </li>
                   <li>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
+                             <Button
+                                variant="ghost"
+                                size="sm"
                       className="w-full justify-start"
                       onClick={onViewProfile}
                     >
@@ -148,9 +149,9 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({
                     </Button>
                   </li>
                   <li>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
+                             <Button
+                                variant="ghost"
+                                size="sm"
                       className="w-full justify-start"
                     >
                       <Settings className="mr-2 h-4 w-4" />
@@ -158,9 +159,9 @@ const HeaderMenu: React.FC<HeaderMenuProps> = ({
                     </Button>
                   </li>
                   <li className="mt-2 pt-2 border-t">
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
+                             <Button
+                                variant="ghost"
+                                size="sm"
                       className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50"
                       onClick={onLogout}
                     >

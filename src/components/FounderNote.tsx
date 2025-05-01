@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 
 const FounderNote = () => {
   const [isVisible, ref] = useIntersectionObserver();
-  
+
   return (
-    <section 
-      id="founder-note" 
+     <section
+        id="founder-note"
       ref={ref}
       className={`py-20 bg-gray-50 ${isVisible ? "animate-reveal revealed" : "animate-reveal"}`}
     >
@@ -22,15 +22,15 @@ const FounderNote = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold">David Campbell</h3>
+                    <h3 className="text-xl font-bold">Shourav Rahman</h3>
               <p className="text-blue-200">Indie Hacker & Creator of WarmUpPilot</p>
             </div>
-            
+
             <div className="p-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 From one indie hacker to another
               </h2>
-              
+
               <div className="prose text-gray-600">
                 <p>
                   I built WarmUpPilot because I couldn't justify spending $50+ monthly just to warm up two email accounts. I needed something affordable that just worked, without all the enterprise bloat.
@@ -42,7 +42,7 @@ const FounderNote = () => {
                   If you're like me – bootstrapping, cost-conscious, but unwilling to compromise on deliverability – give WarmUpPilot a try. If it doesn't work for you, I'll refund you immediately. No questions asked.
                 </p>
               </div>
-              
+
               <div className="flex items-center mt-6">
                 <svg viewBox="0 0 100 24" className="h-8 text-blue-500">
                   {[...Array(5)].map((_, i) => (
@@ -58,7 +58,7 @@ const FounderNote = () => {
                   Based on 50+ indie hackers using WarmUpPilot
                 </span>
               </div>
-              
+
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
                 <Link to="/register">
                   <Button size="lg" className="btn-gradient w-full sm:w-auto">

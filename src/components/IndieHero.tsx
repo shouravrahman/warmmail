@@ -8,25 +8,25 @@ const IndieHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const emailIconRef = useRef<HTMLDivElement>(null);
   const dollarIconRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current || !emailIconRef.current || !dollarIconRef.current) return;
-      
+
       // Get mouse position relative to container
       const { left, top, width, height } = containerRef.current.getBoundingClientRect();
       const mouseX = e.clientX - left;
       const mouseY = e.clientY - top;
-      
+
       // Calculate position as percentage
       const xPercent = mouseX / width;
       const yPercent = mouseY / height;
-      
+
       // Apply subtle movement to elements
       emailIconRef.current.style.transform = `translate(${xPercent * 20 - 10}px, ${yPercent * 20 - 10}px)`;
       dollarIconRef.current.style.transform = `translate(${-xPercent * 15 + 7.5}px, ${-yPercent * 15 + 7.5}px)`;
     };
-    
+
     const container = containerRef.current;
     if (container) {
       container.addEventListener('mousemove', handleMouseMove);
@@ -50,7 +50,7 @@ const IndieHero = () => {
             <p className="text-lg text-gray-600">
               I built WarmUpPilot because $49/month was too much for warming up 2 emails. Now you can do it for just $10/month.
             </p>
-            
+
             <div className="p-4 bg-white/80 backdrop-blur-sm rounded-lg border border-blue-100 shadow-sm">
               <p className="text-gray-700 italic text-sm">
                 <span className="font-semibold">"As an indie hacker, every dollar counts.</span> That's why I created the email warm-up tool I wish existed."
@@ -60,12 +60,12 @@ const IndieHero = () => {
                   DC
                 </div>
                 <div className="ml-2">
-                  <div className="text-sm font-medium">David Campbell</div>
+                          <div className="text-sm font-medium">Shourav Rahman</div>
                   <div className="text-xs text-gray-500">Creator, WarmUpPilot</div>
                 </div>
               </div>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/register">
                 <Button size="lg" className="btn-gradient text-base">
@@ -79,7 +79,7 @@ const IndieHero = () => {
                 </Button>
               </a>
             </div>
-            
+
             <div className="flex items-center text-sm text-gray-500 pt-2">
               <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-emerald-500 mr-2">
                 <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -88,16 +88,16 @@ const IndieHero = () => {
               No credit card required for free trial
             </div>
           </div>
-          
+
           <div className="relative h-full flex items-center justify-center">
             {/* Background effects */}
             <div className="absolute w-72 h-72 bg-blue-300/20 rounded-full filter blur-xl animate-pulse"></div>
             <div className="absolute w-48 h-48 bg-violet-300/20 rounded-full filter blur-xl animate-pulse" style={{ animationDelay: '1s', left: '25%', top: '15%' }}></div>
-            
+
             {/* Comparison visualization */}
             <div className="relative z-10 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-gray-200 max-w-md">
               <h3 className="text-lg font-bold text-gray-800 mb-4">The Simple Math</h3>
-              
+
               {/* Competitor pricing */}
               <div className="flex items-center mb-6 p-4 bg-red-50 rounded-lg border border-red-100 relative">
                 <div ref={dollarIconRef} className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-500 mr-4 transition-transform duration-300 ease-out">
@@ -121,7 +121,7 @@ const IndieHero = () => {
                   </svg>
                 </div>
               </div>
-              
+
               {/* WarmUpPilot pricing */}
               <div className="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-100 relative">
                 <div ref={emailIconRef} className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-500 mr-4 transition-transform duration-300 ease-out">
@@ -140,7 +140,7 @@ const IndieHero = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Savings highlight */}
               <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-100">
                 <div className="flex items-center justify-between">
@@ -160,7 +160,7 @@ const IndieHero = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Animated wave at bottom */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" fill="#FFFFFF" className="w-full h-auto">
